@@ -112,6 +112,7 @@ INSERT dbo.Customer VALUES ('cu014', 'Ann', 'Berry','1986-12-15','9648243656');
 INSERT dbo.Customer VALUES ('cu015', 'Tomas', 'Anderson','2004-04-23','9648243656');
 INSERT dbo.Customer VALUES ('cu016', 'Alex', 'Ford','1987-08-05','9648243656');
 INSERT dbo.Customer VALUES ('cu017', 'Luke', 'Handsonberg','1990-04-20','9648243656');
+INSERT dbo.Customer VALUES ('cu019', 'Kart', 'Tim','1993-04-23','9648243648', null);
 
 INSERT dbo.CustomerAddress VALUES ('cd001', '333 Huntington Aveue', 'Boston','221','cu001');
 INSERT dbo.CustomerAddress VALUES ('cd002', '329 Clearway Street', 'Boston','421','cu002');
@@ -298,7 +299,6 @@ INSERT dbo.CustomerAddress VALUES ('cd018', NULl, NULL ,'9044','cu018');
 SELECT * FROM CustomerAddress;
 
 
-
 -- Computed Column 
 -- 1. Calculate CartItem Total Price
 CREATE FUNCTION dbo.CalcuCartItemTotalPrice(@CartItemID VARCHAR(20))
@@ -325,6 +325,23 @@ SELECT TOP 3 *
 FROM dbo.CartItem
 ORDER BY TotalPrice DESC;
 
+--trigger
+--New Customer inserted will has a unique cart by default
+CREATE TRIGGER genCartForNewCustomer
+ON Customer
+AFTER INSERT
+AS
+	BEGIN
+		DECLARE @CustomerID varchar(5);
+		
+		SET @CustomerID = (
+			SELECT CustomerID
+			FROM inserted
+		)
+		BEGIN
+			INSERT Cart VALUES (@CustomerID, @CustomerID)
+		END
+	END
 
 -- 2.Calculate Cart Total Price
 CREATE FUNCTION dbo.CalcuCartTotalPrice(@CartID VARCHAR(20))
@@ -468,13 +485,16 @@ DECRYPTION BY CERTIFICATE Group17_Certificate;
 
 -- Insert new user
 INSERT INTO Customer(CustomerId, FirstName, LastName, Telephone, Password, Birthday)
-VALUES ('cu018','John', 'Smith', '678-234-5678', EncryptByKey(Key_GUID(N'Group17_SymmetricKey'), CONVERT(VARBINARY, 'PassWord1')), '1990-12-13');
+VALUES ('CU245','John', 'Smith', '678-234-5678', EncryptByKey(Key_GUID(N'Group17_SymmetricKey'), CONVERT(VARBINARY, 'PassWord1')), '1990-12-13');
 
--- test
-SELECT * FROM Customer
- 
--- Use decrypt function to see the original password
-SELECT FirstName, LastName, CONVERT(VARCHAR, DecryptByKey(Password))  FROM Customer;
+-- test without decrypt
+SELECT FirstName, LastName, Password
+FROM Customer
+WHERE CustomerId = 'CU245';
+-- Use decrypt function to check the original password
+SELECT FirstName, LastName, CONVERT(VARCHAR, DecryptByKey(Password)) as [Password] 
+FROM Customer
+WHERE CustomerId = 'CU245';
  
 -- Drop the table
 -- DROP TABLE Customer
