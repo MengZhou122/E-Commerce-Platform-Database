@@ -1,1 +1,6 @@
 # INFO6210-Final
+
+Designed a relational database with 12 entities to manage orders and products information of an e-commerce platform
+Inserted and stored all data on MongoDB, realized encryption and decryption on confidential column data
+Implemented the database by SQL DDL statements include column computing, table-level check constraints, triggers
+Created queries to retrieve views/tables for data-mining, visualized analysis multi-dimension reports by Tableau
