@@ -1,4 +1,4 @@
-# INFO6210-Final
+# Final project for INFO6210(Data Management and Database Design)
 
 Designed a relational database with 12 entities to manage orders and products information of an e-commerce platform.
 
