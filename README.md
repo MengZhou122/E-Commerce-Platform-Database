@@ -1,6 +1,6 @@
 # Final project for INFO6210(Data Management and Database Design)
 
-Designed a relational database with 12 entities to manage orders and products information of an e-commerce platform.
+Designed a relational database with 12 entities to manage orders and products information of an E-commerce platform.
 
 Inserted and stored all data on MongoDB, realized encryption and decryption on confidential column data.
 
