@@ -9,4 +9,4 @@ Implemented the database by SQL DDL statements include column computing, table-l
 Created queries to retrieve views/tables for data-mining, visualized analysis multi-dimension reports by Tableau.
 
 ## Entity Relationship Diagram:
-![Image of ERD](https://github.com/MengZhou122/hyper_garage_sale/blob/master/images/Navigation%20Logic.png)
+![Image of ERD](https://github.com/MengZhou122/E-Commerce-Platform-Database/blob/master/ERD.png)
